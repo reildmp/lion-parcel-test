@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <v-main>
+      <template-loading v-if="loading"/>
+      <router-view/>
+      <organism-snackbar />
+    </v-main>
+  </v-app>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { onMounted, computed } from "vue";
+import { useStore } from "vuex";
+import TemplateLoading from "./templates/TemplateLoading.vue";
+import OrganismSnackbar from "./components/organisms/OrganismSnackBar.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+const store = useStore();
+
+const loading = computed(() => {
+  return store.getters.getLoading;
+});
+
+onMounted(async () => {
+  const token = window.localStorage.getItem("movieFestival");
+  let expired = false;
+  if (token !== null) {
+    expired = Date.now() > JSON.parse(token).expired;
+  } else {
+    expired = true;
   }
-}
+  if (expired) {
+    store.commit("setDetailAuth", []);
+  } else {
+    store.commit("setDetailAuth", JSON.parse(token));
+  }
+});
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
