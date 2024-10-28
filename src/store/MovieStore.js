@@ -129,6 +129,24 @@ export default {
 					});
 			});
 		},
+		async callHandleVote({ commit, dispatch }, data) {
+			const url = process.env.VUE_APP_API_URL + `movies/${data.id}`;
+			return new Promise((resolve, reject) => {
+				axios({
+					url: url,
+					method: 'PUT',
+					data,
+				})
+					.then(() => {
+						dispatch('callListMovie');
+						commit('setLoading', false);
+						resolve();
+					})
+					.catch((err) => {
+						reject(err);
+					});
+			});
+		},
 	},
 	mutations: {
 		setListMovie: (state, data) => {

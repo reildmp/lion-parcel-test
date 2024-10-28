@@ -101,6 +101,35 @@ export default {
 				window.location.href = '/';
 			}, 1000);
 		},
+		async callHandleVoteUser({ commit, state }, data) {
+			const index = state.detailAuth.voted.findIndex((u) => u == data.id);
+			const voted =
+				index !== -1
+					? [...state.detailAuth.voted.splice(index, 1)]
+					: state.detailAuth.voted.push(parseInt(data.id));
+			const payload = {
+				...state.detailAuth,
+				vote: voted,
+			};
+			delete payload.expired;
+			const url = process.env.VUE_APP_API_URL + `users/${payload.id}`;
+			return new Promise((resolve, reject) => {
+				axios({
+					url: url,
+					method: 'PUT',
+					data: payload,
+				})
+					.then(() => {
+						commit('setDetailAuth', payload);
+						commit('setLocalstorage', payload);
+						commit('setLoading', false);
+						resolve();
+					})
+					.catch((err) => {
+						reject(err);
+					});
+			});
+		},
 	},
 	mutations: {
 		setLocalstorage: (_, data) => {

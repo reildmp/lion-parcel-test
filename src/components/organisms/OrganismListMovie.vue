@@ -10,7 +10,12 @@
   </div>
   <div class="grid grid-cols-3 gap-8 mt-8">
     <div v-for="item in listMovie" :key="item.id">
-      <MoleculeCardMovie :detail="item" @increment-view="handleIncrementView" />
+      <MoleculeCardMovie
+        :detail="item"
+        :account="detailAuth"
+        @increment-view="handleIncrementView"
+        @handle-vote="handleVote"
+      />
     </div>
   </div>
   <v-pagination
@@ -30,6 +35,10 @@ const store = useStore();
 
 const sort = computed(() => {
   return store.getters.getSortMovie;
+});
+
+const detailAuth = computed(() => {
+  return store.getters.getDetailAuth;
 });
 
 const listSort = [
@@ -64,5 +73,10 @@ const handlePage = (data) => {
 const handleIncrementView = (data) => {
   store.commit("setLoading", true);
   store.dispatch("callAddView", data);
+};
+
+const handleVote = (data) => {
+  store.dispatch("callHandleVoteUser", data);
+  store.dispatch("callHandleVote", data);
 };
 </script>

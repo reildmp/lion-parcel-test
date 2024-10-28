@@ -2,14 +2,14 @@
   "movies": [
     {
       "id": "0",
-      "title": "Lion Parcel 00",
+      "title": "Lion Parcel 0",
       "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum suscipit eaque nemo consequatur, voluptatem facilis ipsam doloremque. Dolorem sit fugit, iure libero iusto doloremque reiciendis soluta rem repudiandae eius et.",
       "duration": 15,
       "artist": "Lion Parcel 0",
       "genre": "Action",
       "url": "https://www.youtube.com/watch?v=rth5QqXET6c",
-      "vote": 9,
-      "view": 4
+      "vote": 3,
+      "view": 11
     },
     {
       "id": "1",
@@ -74,7 +74,7 @@
       "artist": "Lion Parcel 0",
       "genre": "Action",
       "url": "https://www.youtube.com/watch?v=rth5QqXET6c",
-      "vote": 9,
+      "vote": 8,
       "view": 3
     },
     {
@@ -148,7 +148,14 @@
       "username": "test",
       "password": "test",
       "type": 1,
-      "voted": []
+      "voted": [
+        0,
+        1,
+        5
+      ],
+      "vote": [
+        6
+      ]
     }
   ]
 }

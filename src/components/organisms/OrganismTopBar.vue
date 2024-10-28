@@ -1,6 +1,6 @@
 <template>
   <v-app-bar :elevation="2">
-    <v-app-bar-title>Movie Festival</v-app-bar-title>
+    <v-app-bar-title @click="goHome">Movie Festival</v-app-bar-title>
     <div v-if="detailAuth.length !== 0">
       <v-btn
         prepend-icon="mdi-account-cog"
@@ -19,13 +19,19 @@
 
 <script setup>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const store = useStore();
+const router = useRouter();
 
 const detailAuth = computed(() => {
   return store.getters.getDetailAuth;
 });
+
+const goHome = () => {
+  router.push("/");
+};
 
 const logout = () => {
   store.dispatch("callLogout");
